@@ -9,7 +9,7 @@ async function initializePomodoro() {
     console.log('Welcome to Pomodoro Timer!');
     console.log(pomodoroArt);
     console.log(`Current Pomodoro cycles are Work: ${config.workInterval} minutes, Short Break: ${config.shortBreak} minutes, and Long Break: ${config.longBreak} minutes.`);
-    const result = prompt('Click enter when you\'re ready to start working! ');
+    const result: string = prompt('Click enter when you\'re ready to start working! ');
     if (result === '') startTimer(config.workInterval);
 }
 
