@@ -14,7 +14,6 @@ function advancePomoInterval() {
         if (data_1.data.pomoIntervalCounter !== 4) { // need a short break -- 4 cycles not completed yet
             const result = prompt(`Work-time #${data_1.data.pomoIntervalCounter} is over. Well done! Press enter to start your short break or type "quit" to exit out. `);
             if (result === '') {
-                console.log('empty detected');
                 data_1.data.currentPomoInterval = 'shortBreak';
                 (0, start_timer_1.startTimer)(data_1.config.shortBreak);
             }
