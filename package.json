@@ -19,6 +19,7 @@
   "homepage": "https://github.com/cam-peck/node-pomodoro#readme",
   "devDependencies": {
     "@types/node": "^18.11.18",
+    "@types/node-notifier": "^8.0.2",
     "@types/prompt-sync": "^4.2.0",
     "@typescript-eslint/eslint-plugin": "^5.50.0",
     "@typescript-eslint/parser": "^5.50.0",
@@ -26,6 +27,7 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
+    "node-notifier": "^10.0.1",
     "prompt-sync": "^4.2.0"
   }
 }
