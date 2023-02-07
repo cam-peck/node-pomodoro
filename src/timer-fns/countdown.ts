@@ -1,6 +1,6 @@
 import { advancePomoInterval } from './advance-pomo-interval';
-import { formatTime } from './format-time';
-import { data } from './data';
+import { formatTime } from '../lib/format-time';
+import { data } from '../data';
 
 function countdown() {
     if (data.remainingTime === 0) {

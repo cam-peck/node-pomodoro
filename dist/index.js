@@ -3,9 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const display_ascii_1 = require("./display-ascii");
+const display_ascii_1 = require("./lib/display-ascii");
 const data_1 = require("./data");
-const start_timer_1 = require("./start-timer");
+const start_timer_1 = require("./timer-fns/start-timer");
 const prompt_sync_1 = __importDefault(require("prompt-sync"));
 const prompt = (0, prompt_sync_1.default)();
 async function initializePomodoro() {
@@ -18,7 +18,6 @@ async function initializePomodoro() {
 }
 initializePomodoro();
 // TODO
-// Add a lib folder and better file organization
 // add timing markers -- no need to always update seconds
 // add notification popup when timer pops
 // consider if data.ts is actually the best way to store data --> is json better?

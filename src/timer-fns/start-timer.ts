@@ -1,6 +1,6 @@
-import { convertToSeconds } from './convert-to-seconds';
+import { convertToSeconds } from '../lib/convert-to-seconds';
 import { countdown } from './countdown';
-import { data } from './data';
+import { data } from '../data';
 
 function startTimer(duration: number) { // starts a timer for the passed in minute value //
     data.remainingTime = convertToSeconds(duration);

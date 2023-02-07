@@ -1,7 +1,7 @@
 import promptSync from 'prompt-sync';
-import { data, config } from './data';
+import { data, config } from '../data';
 import { startTimer } from './start-timer';
-import { sendNotification } from './notify';
+import { sendNotification } from '../lib/notify';
 
 const prompt = promptSync();
 

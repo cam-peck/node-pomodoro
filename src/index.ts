@@ -1,6 +1,6 @@
-import { pomodoroArt } from './display-ascii';
+import { pomodoroArt } from './lib/display-ascii';
 import { config } from './data';
-import { startTimer } from './start-timer';
+import { startTimer } from './timer-fns/start-timer';
 import promptSync from 'prompt-sync';
 
 const prompt = promptSync();
@@ -17,7 +17,6 @@ initializePomodoro();
 
 
 // TODO
-// Add a lib folder and better file organization
 // add timing markers -- no need to always update seconds
 // add notification popup when timer pops
 // consider if data.ts is actually the best way to store data --> is json better?
