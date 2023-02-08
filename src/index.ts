@@ -5,10 +5,14 @@ import promptSync from 'prompt-sync';
 
 const prompt = promptSync();
 
-async function initializePomodoro() {
-    console.log('Welcome to Pomodoro Timer!');
-    console.log(pomodoroArt);
-    console.log(`Current Pomodoro cycles are Work: ${config.workInterval} minutes, Short Break: ${config.shortBreak} minutes, and Long Break: ${config.longBreak} minutes.`);
+function initializePomodoro() {
+    console.log(pomodoroArt, '\n');
+    
+    console.log('Welcome to Pomodoro Timer!\n');
+    console.log('Current Pomodoro cycles are...');
+    console.log(`Work: ${config.workInterval} minutes.`);
+    console.log(`Short Break: ${config.shortBreak} minutes.`);
+    console.log(`Long Break: ${config.longBreak} minutes.\n`);
     const result: string = prompt('Click enter when you\'re ready to start working! ');
     if (result === '') startTimer(config.workInterval);
 }

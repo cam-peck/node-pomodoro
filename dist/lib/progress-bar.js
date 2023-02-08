@@ -26,34 +26,53 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const readline = __importStar(require("node:readline/promises"));
 const node_process_1 = require("node:process");
 const rl = new readline.Readline(node_process_1.stdout);
-function progressBar() {
-    rl.cursorTo(15, 10);
-    rl.commit();
-    process.stdout.write('A');
-}
 class LoadingBar {
     constructor(size) {
         this.size = size;
-        this.cursor = 0;
+        this.progressCursor = 0;
+        this.timeRemaining = 20;
         this.timer = null;
     }
     start() {
         process.stdout.write('\x1B[?25l');
+        process.stdout.write('Work Cycle #1\n');
+        process.stdout.write('Time Remaining: 20\n');
+        // draws the initial bar //
         process.stdout.write('[');
         for (let i = 0; i < this.size; i++) {
             process.stdout.write('-');
         }
-        process.stdout.write(']');
-        this.cursor = 1;
-        rl.cursorTo(this.cursor, 1);
+        process.stdout.write('] ');
+        // fills in the bar //
+        this.progressCursor = 1;
+        rl.cursorTo(this.progressCursor, 3);
         rl.commit();
         this.timer = setInterval(() => {
+            this.updateTimer();
+            this.updateProgress();
             process.stdout.write('=');
-            this.cursor++;
-            if (this.cursor > this.size) { // >= stops one before, > stops at size
+            this.progressCursor++;
+            if (this.progressCursor > this.size) { // >= stops one before, > stops at size
+                process.stdout.write('\n');
+                // rl.cursorTo(0, 0);
+                // rl.clearScreenDown();
+                // rl.commit();
                 clearTimeout(this.timer);
-            } //stop code goes here
+                // this.start();
+            }
         }, 1000);
+    }
+    updateTimer() {
+        rl.cursorTo(15, 2);
+        rl.clearLine(1);
+        rl.cursorTo(16, 2);
+        rl.commit();
+        this.timeRemaining--;
+        process.stdout.write(`${this.timeRemaining}`);
+    }
+    updateProgress() {
+        rl.cursorTo(this.progressCursor, 3);
+        rl.commit();
     }
 }
 const lb = new LoadingBar(20);
