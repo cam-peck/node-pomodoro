@@ -23,11 +23,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.LoadingBar = void 0;
 const readline = __importStar(require("node:readline/promises"));
 const node_process_1 = require("node:process");
 const convert_to_seconds_1 = require("./convert-to-seconds");
 const format_time_1 = require("./format-time");
-const advance_pomo_interval_1 = require("../timer-fns/advance-pomo-interval");
+const advance_pomo_interval_1 = require("./advance-pomo-interval");
 const rl = new readline.Readline(node_process_1.stdout);
 class LoadingBar {
     constructor(timerLength) {
@@ -35,6 +36,7 @@ class LoadingBar {
         this.secondsRemaining = (0, convert_to_seconds_1.convertToSeconds)(timerLength);
         this.barLength = 59;
         this.progressCursorX = 0;
+        this.progressCursorY = 20;
         this.timerIntvId = null;
     }
     start() {
@@ -48,29 +50,30 @@ class LoadingBar {
         }, 1000);
     }
     updateTimer() {
-        rl.cursorTo(15, 2);
+        rl.cursorTo(15, this.progressCursorY - 1);
         rl.clearLine(1);
-        rl.cursorTo(16, 2);
+        rl.cursorTo(16, this.progressCursorY - 1);
         rl.commit();
         this.secondsRemaining--;
         process.stdout.write(`${(0, format_time_1.formatTime)(this.secondsRemaining)}`);
     }
     updateProgress() {
         this.progressCursorX++;
-        rl.cursorTo(this.progressCursorX, 3);
+        rl.cursorTo(this.progressCursorX, this.progressCursorY);
         rl.commit();
         process.stdout.write('=');
         if (this.progressCursorX > this.barLength) { // once we hit the minute marker...
             this.resetMinuteProgress();
         }
         if (this.secondsRemaining === 0) { // timer is complete
+            process.stdout.write('\n');
             (0, advance_pomo_interval_1.advancePomoInterval)();
         }
     }
     resetMinuteProgress() {
         rl.clearLine(-1);
         this.progressCursorX = 0;
-        rl.cursorTo(this.progressCursorX, 3);
+        rl.cursorTo(this.progressCursorX, this.progressCursorY);
         rl.commit();
         this.drawProgressBar();
     }
@@ -82,6 +85,5 @@ class LoadingBar {
         process.stdout.write('] ');
     }
 }
-const lb = new LoadingBar(3);
-lb.start();
-//# sourceMappingURL=progress-bar.js.map
+exports.LoadingBar = LoadingBar;
+//# sourceMappingURL=loading-bar.js.map

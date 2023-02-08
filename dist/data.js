@@ -9,9 +9,9 @@ const data = {
 };
 exports.data = data;
 const config = {
-    workInterval: 0.1,
-    shortBreak: 0.1,
-    longBreak: 0.1
+    workInterval: 1,
+    shortBreak: 1,
+    longBreak: 1
 };
 exports.config = config;
 //# sourceMappingURL=data.js.map

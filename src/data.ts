@@ -15,9 +15,9 @@ const config: {
     shortBreak: number,
     longBreak: number
 } = {
-    workInterval: 0.1,
-    shortBreak: 0.1,
-    longBreak: 0.1
+    workInterval: 1,
+    shortBreak: 1,
+    longBreak: 1
 };
 
 export { data, config };

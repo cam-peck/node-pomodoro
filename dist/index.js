@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const display_ascii_1 = require("./lib/display-ascii");
 const data_1 = require("./data");
-const start_timer_1 = require("./timer-fns/start-timer");
+const loading_bar_1 = require("./lib/loading-bar");
 const prompt_sync_1 = __importDefault(require("prompt-sync"));
 const prompt = (0, prompt_sync_1.default)();
 function initializePomodoro() {
@@ -16,8 +16,10 @@ function initializePomodoro() {
     console.log(`Short Break: ${data_1.config.shortBreak} minutes.`);
     console.log(`Long Break: ${data_1.config.longBreak} minutes.\n`);
     const result = prompt('Click enter when you\'re ready to start working! ');
-    if (result === '')
-        (0, start_timer_1.startTimer)(data_1.config.workInterval);
+    if (result === '') {
+        const lb = new loading_bar_1.LoadingBar(data_1.config.workInterval);
+        lb.start();
+    }
 }
 initializePomodoro();
 // TODO

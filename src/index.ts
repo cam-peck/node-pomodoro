@@ -1,6 +1,6 @@
 import { pomodoroArt } from './lib/display-ascii';
 import { config } from './data';
-import { startTimer } from './timer-fns/start-timer';
+import { LoadingBar } from './lib/loading-bar';
 import promptSync from 'prompt-sync';
 
 const prompt = promptSync();
@@ -13,8 +13,12 @@ function initializePomodoro() {
     console.log(`Work: ${config.workInterval} minutes.`);
     console.log(`Short Break: ${config.shortBreak} minutes.`);
     console.log(`Long Break: ${config.longBreak} minutes.\n`);
+
     const result: string = prompt('Click enter when you\'re ready to start working! ');
-    if (result === '') startTimer(config.workInterval);
+    if (result === '') {
+        const lb = new LoadingBar(config.workInterval);
+        lb.start();
+    }
 }
 
 initializePomodoro();
