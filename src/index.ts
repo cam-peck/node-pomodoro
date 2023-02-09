@@ -1,6 +1,11 @@
-import { PomodoroTimer } from './pomodoro-timer';
+import { PomodoroTimer } from './classes/pomodoro-timer';
+import { pomoConfig } from './pomo-config';
 
-const timer = new PomodoroTimer(0.05, 0.1, 5);
+// To change the interval duration, change the numbers in src/config/config.ts //
+
+const { workInterval, shortBreakInterval, longBreakInterval } = pomoConfig;
+
+const timer = new PomodoroTimer(workInterval, shortBreakInterval, longBreakInterval);
 timer.displayWelcomeMessage();
 timer.promptUserForStart();
 

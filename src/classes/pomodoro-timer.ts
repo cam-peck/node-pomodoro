@@ -1,6 +1,6 @@
-import { pomodoroArt } from './lib/display-ascii';
+import { pomodoroArt } from '../lib/display-ascii';
 import { LoadingBar } from './loading-bar';
-import { sendNotification } from './lib/notify';
+import { sendNotification } from '../lib/notify';
 import promptSync from 'prompt-sync';
 
 const prompt = promptSync();
@@ -72,7 +72,9 @@ class PomodoroTimer {
             this.currentCycle = 'work';
         } else if (this.currentCycle === 'longBreak') {
             this.currentCycle = 'work';
-            return;
+            this.workCyclesCompleted = 0;
+            const reply = prompt('Pomodoro Cycle Complete! Would you like to restart the timer? (Y / n) ');
+            if (reply.toLowerCase() !== 'y') return;
         }
         this.startCycle(this.currentCycle);
     }
@@ -81,8 +83,4 @@ class PomodoroTimer {
 export { PomodoroTimer };
 
 // TODO:
-    // Fix logic once timer is complete
-    // Cleanup files ! Pomodoro needs its own class
-    // Timer and progress bar having their own class would be good too
-    // index.js should still start the timeer
     // fix weird bug where shrinking the terminal results in losing the bar b/c time overlaps it

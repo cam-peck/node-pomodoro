@@ -1,8 +1,8 @@
 import * as readline from 'node:readline/promises';
 import { stdout as output } from 'node:process';
-import { convertToSeconds } from './lib/convert-to-seconds';
-import { formatTime } from './lib/format-time';
-import { timer } from './index';
+import { convertToSeconds } from '../lib/convert-to-seconds';
+import { formatTime } from '../lib/format-time';
+import { timer } from '../index';
 
 const rl = new readline.Readline(output);
 
