@@ -1,11 +1,8 @@
 import * as readline from 'node:readline/promises';
-import { stdin as input, stdout as output } from 'node:process';
-import { convertToSeconds } from './convert-to-seconds';
-import { formatTime } from './format-time';
-import { timer } from '../index';
-
-// TODO: Fix pomocounter from data to look at class LoadingBar data point
-// incorrect data linkage between LoadingBar and s
+import { stdout as output } from 'node:process';
+import { convertToSeconds } from './lib/convert-to-seconds';
+import { formatTime } from './lib/format-time';
+import { timer } from './index';
 
 const rl = new readline.Readline(output);
 
