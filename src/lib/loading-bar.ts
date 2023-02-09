@@ -2,7 +2,9 @@ import * as readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
 import { convertToSeconds } from './convert-to-seconds';
 import { formatTime } from './format-time';
-import { advancePomoInterval } from './advance-pomo-interval';
+
+// TODO: Fix pomocounter from data to look at class LoadingBar data point
+// incorrect data linkage between LoadingBar and s
 
 const rl = new readline.Readline(output);
 
@@ -19,13 +21,15 @@ class LoadingBar {
         this.secondsRemaining = convertToSeconds(timerLength);
         this.barLength = 59;
         this.progressCursorX = 0;
-        this.progressCursorY = 20;
+        this.progressCursorY = 21;
         this.timerIntvId = null;
     }
     
     start() {
         process.stdout.write('\x1B[?25l');
-        process.stdout.write('Work Cycle #1\n');
+        rl.cursorTo(0, 20);
+        rl.clearScreenDown();
+        rl.commit();
         process.stdout.write(`Time Remaining: ${formatTime(this.secondsRemaining)} \n`);
         this.drawProgressBar();
 
@@ -54,7 +58,7 @@ class LoadingBar {
         }
         if (this.secondsRemaining === 0) { // timer is complete
             process.stdout.write('\n');
-            advancePomoInterval();
+            clearTimeout(this.timerIntvId);
         }
     }
 

@@ -7,7 +7,7 @@ const data: {
     nIntervId: null,
     remainingTime: 0,
     currentPomoInterval: 'workTime',
-    pomoIntervalCounter: 0
+    pomoIntervalCounter: 1
 };
 
 const config: {
@@ -15,9 +15,9 @@ const config: {
     shortBreak: number,
     longBreak: number
 } = {
-    workInterval: 1,
-    shortBreak: 1,
-    longBreak: 1
+    workInterval: 0.05,
+    shortBreak: 0.05,
+    longBreak: 0.05
 };
 
 export { data, config };
