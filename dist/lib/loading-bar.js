@@ -28,6 +28,7 @@ const readline = __importStar(require("node:readline/promises"));
 const node_process_1 = require("node:process");
 const convert_to_seconds_1 = require("./convert-to-seconds");
 const format_time_1 = require("./format-time");
+const index_1 = require("../index");
 // TODO: Fix pomocounter from data to look at class LoadingBar data point
 // incorrect data linkage between LoadingBar and s
 const rl = new readline.Readline(node_process_1.stdout);
@@ -37,22 +38,39 @@ class LoadingBar {
         this.secondsRemaining = (0, convert_to_seconds_1.convertToSeconds)(timerLength);
         this.barLength = 59;
         this.progressCursorX = 0;
-        this.progressCursorY = 21;
+        this.progressCursorY = 19;
         this.timerIntvId = null;
     }
     start() {
+        // setup all the UI //
         process.stdout.write('\x1B[?25l');
-        rl.cursorTo(0, 20);
+        rl.cursorTo(0, 17);
         rl.clearScreenDown();
         rl.commit();
-        process.stdout.write(`Time Remaining: ${(0, format_time_1.formatTime)(this.secondsRemaining)} \n`);
+        this.writeCycleText();
+        this.writeTimeRemaining();
         this.drawProgressBar();
+        // start the timer //
         this.timerIntvId = setInterval(() => {
-            this.updateTimer();
-            this.updateProgress();
+            this.updateTimeRemaining();
+            this.updateProgressBar();
         }, 1000);
     }
-    updateTimer() {
+    writeCycleText() {
+        if (index_1.timer.currentCycle === 'work') {
+            process.stdout.write(`Work Cycle #${index_1.timer.workCyclesCompleted + 1} \n`);
+        }
+        if (index_1.timer.currentCycle === 'shortBreak') {
+            process.stdout.write(`Short Break #${index_1.timer.workCyclesCompleted} \n`);
+        }
+        if (index_1.timer.currentCycle === 'longBreak') {
+            process.stdout.write('Long Break! \n');
+        }
+    }
+    writeTimeRemaining() {
+        process.stdout.write(`Time Remaining: ${(0, format_time_1.formatTime)(this.secondsRemaining)} \n`);
+    }
+    updateTimeRemaining() {
         rl.cursorTo(15, this.progressCursorY - 1);
         rl.clearLine(1);
         rl.cursorTo(16, this.progressCursorY - 1);
@@ -60,7 +78,7 @@ class LoadingBar {
         this.secondsRemaining--;
         process.stdout.write(`${(0, format_time_1.formatTime)(this.secondsRemaining)}`);
     }
-    updateProgress() {
+    updateProgressBar() {
         this.progressCursorX++;
         rl.cursorTo(this.progressCursorX, this.progressCursorY);
         rl.commit();
@@ -71,6 +89,7 @@ class LoadingBar {
         if (this.secondsRemaining === 0) { // timer is complete
             process.stdout.write('\n');
             clearTimeout(this.timerIntvId);
+            index_1.timer.promptUserForNextCycle();
         }
     }
     resetMinuteProgress() {

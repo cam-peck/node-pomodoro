@@ -1,7 +1,6 @@
 import { pomodoroArt } from './lib/display-ascii';
 import { LoadingBar } from './lib/loading-bar';
 import promptSync from 'prompt-sync';
-import { start } from 'repl';
 
 const prompt = promptSync();
 
@@ -31,10 +30,17 @@ class PomodoroTimer {
     }
 
     promptUserForStart() {
-        const reply = prompt('Press enter when you\'re ready to start work cycle #1.\n');
+        const reply = prompt('Press enter when you\'re ready to start work cycle #1.');
         if (reply === '') {
             this.currentCycle = 'work';
             this.startCycle('work');
+        }
+    }
+
+    promptUserForNextCycle() {
+        const result = prompt('Cycle complete! Press enter to move onto the next cycle.');
+        if (result === '') {
+            this.updateCycle();
         }
     }
 
@@ -42,7 +48,6 @@ class PomodoroTimer {
         let lb: LoadingBar;
         switch (cycle) {
             case 'work':
-                console.log(`Work Cycle #${this.workCyclesCompleted + 1}`);
                 lb = new LoadingBar(this.workDuration);
                 break;
             case 'shortBreak':
@@ -56,21 +61,31 @@ class PomodoroTimer {
     }
 
     updateCycle() {
-        if (this.currentCycle === 'work' && this.workCyclesCompleted !== 4) {
-            this.currentCycle = 'shortBreak';
-        }
-        if (this.currentCycle === 'shortBreak') {
+        if (this.currentCycle === 'work') {
+            this.workCyclesCompleted++;
+            if (this.workCyclesCompleted !== 4) this.currentCycle = 'shortBreak';
+            else if (this.workCyclesCompleted === 4) this.currentCycle = 'longBreak';
+            else throw new Error('Error thrown from update Cycle: invalid cycle count detected');
+        } else if (this.currentCycle === 'shortBreak') {
             this.currentCycle = 'work';
-        }
-        if (this.workCyclesCompleted === 4) {
-            this.currentCycle = 'longBreak';
-        }
-        if (this.currentCycle === 'longBreak') {
+        } else if (this.currentCycle === 'longBreak') {
             this.currentCycle = 'work';
+            return;
         }
+        this.startCycle(this.currentCycle);
     }
 }
 
-const timer = new PomodoroTimer(0.1, 0.1, 0.1);
+const timer = new PomodoroTimer(0.05, 0.1, 5);
 timer.displayWelcomeMessage();
 timer.promptUserForStart();
+
+export { timer };
+
+// TODO:
+    // Add prompts for end of cycle
+    // Fix logic once timer is complete
+    // Cleanup files ! Pomodoro needs its own class
+    // Timer and progress bar having their own class would be good too
+    // index.js should still start the timeer
+    // fix weird bug where shrinking the terminal results in losing the bar b/c time overlaps it
