@@ -36,13 +36,13 @@ class LoadingBar {
         this.secondsRemaining = (0, convert_to_seconds_1.convertToSeconds)(timerLength);
         this.barLength = 59;
         this.progressCursorX = 0;
-        this.progressCursorY = 19;
+        this.progressCursorY = 23;
         this.timerIntvId = null;
     }
     start() {
         // setup all the UI //
         process.stdout.write('\x1B[?25l');
-        rl.cursorTo(0, 17);
+        rl.cursorTo(0, this.progressCursorY - 2);
         rl.clearScreenDown();
         rl.commit();
         this.writeCycleText();
