@@ -44,7 +44,13 @@ nano pomo-config.ts
 npm run build
 ```
 
-5. Build the project.
+5. Clear your terminal before starting!
+
+```
+clear
+```
+
+6. Start the timer.
 ```
 npm run start
 ```
